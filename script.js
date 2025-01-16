@@ -1,21 +1,20 @@
 "use strict";
 
-// ----------- UK PAYSLIP APP ------------- >
+// ----------- SCOTTISH PAYSLIP APP ------------- >
 
 // An app that calculates an employees take home pay based on the scottish tax system
 // Can be used as a calculator to show potential earnings and assist with salary negotiation 
-// The app must store an employees name, yearly salary, pay frequency, tax brackets and whethere or not they are blind as variables.
 
-const employeeName = `John Smith`;
-const annualSalary = 12000000; // Change this value to test with different salaries
-const payFreq = `weekly`;
+const employeeName = `Maxwell Hogg`;
+const annualSalary = 25656; // Change this value to test with different salaries
+const payFreq = `monthly`;
 const natIns = 0.08;
+const pensionCont = 0.05;
 const blind = false;
-const studentLoan = [
-    `No Plan`, `Plan A`, `Plan B`, `Plan C`,
-];
+const studentLoan = true;
 
 // Requires a function to calculate how much tax is deducted per bracket
+
 function calcScottishTax(salary) {
     const taxBands = [
         // ------------ TAX BRACKETS ----------------- >
@@ -33,9 +32,9 @@ function calcScottishTax(salary) {
     for (let band of taxBands) {
         if (salary > band.lowerLimit) {
             const taxableIncome = Math.min(salary, band.upperLimit) - band.lowerLimit;
-        totalTax += taxableIncome * band.rate;
+            totalTax += taxableIncome * band.rate;
         } else {
-            break; // No need to check further bands if salary is within this band
+            break;
         }
     }
   
@@ -51,7 +50,30 @@ function calcNatIns(salary) {
 
 // Requires pension contribution deduction
 
-// requires student loan deduction (PLAN BASED)
+function calcPension(salary) {
+    const pensionDeduct = salary * pensionCont;
+    return pensionDeduct;
+}
+
+// requires student loan deduction (PLAN 4 BASED)
+
+function calculateStudentLoanRepayment(annualSalary, wasStudent) {
+    const repaymentThreshold = 31395;
+    const repaymentRate = 0.09;
+
+    if (!wasStudent) {
+        return 0; // No repayment required if the employee was never a student
+    }
+
+    if (annualSalary <= repaymentThreshold) {
+        return 0; // No repayment required if salary is below the threshold
+    }
+
+    const incomeAboveThreshold = annualSalary - repaymentThreshold;
+    const repaymentAmount = incomeAboveThreshold * repaymentRate;
+
+    return repaymentAmount;
+}
 
 // requires a function to deduct all deductions from annualSalary
 
@@ -71,3 +93,5 @@ function calcNatIns(salary) {
 // Console output to test results
 console.log(`${employeeName}'s Total tax on an annual salary of £${annualSalary} is £${calcScottishTax(annualSalary).toFixed(2)}.`);
 console.log(`${employeeName} will pay £${calcNatIns(annualSalary).toFixed(2)} in yearly National Insurance contributions.`);
+console.log(`${employeeName} will pay £${calcPension(annualSalary).toFixed(2)} towards a pension fund.`);
+console.log(`${employeeName}'s student loan repayment amounts to £${calculateStudentLoanRepayment(annualSalary, studentLoan).toFixed(2)}`);
