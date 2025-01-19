@@ -1,21 +1,18 @@
 "use strict";
 
-// ----------- SCOTTISH PAYSLIP APP ------------- >
-
-// An app that calculates an employees take home pay based on the scottish tax system
-// Can be used as a calculator to show potential earnings and assist with salary negotiation 
-
-const employeeName = `Maxwell Hogg`;
-const annualSalary = 25656; // Change this value to test with different salaries
+const employeeName = `Maxwell Hogg`; //document.querySelector(`.name`).value;
+const hourlyRate = 14;
+const hours = 40;
+const annualSalary = (hourlyRate * hours) * 52;
+const topLineMonthly = annualSalary / 12;
+const topLineWeekly = annualSalary / 52;
 const payFreq = `monthly`;
 const natIns = 0.08;
 const pensionCont = 0.05;
 const blind = false;
 const studentLoan = true;
 
-// Requires a function to calculate how much tax is deducted per bracket
-
-function calcScottishTax(salary) {
+const calcScottishTax = function (salary) {
     const taxBands = [
         // ------------ TAX BRACKETS ----------------- >
         { lowerLimit: 0, upperLimit: 12570, rate: 0 }, // Personal Allowance
@@ -38,60 +35,57 @@ function calcScottishTax(salary) {
         }
     }
   
-    return totalTax;
+    return totalTax.toFixed(2);
 }
 
-// Requires national insurance deduction
-
-function calcNatIns(salary) {
+const calcNatIns = function (salary) {
     const natInsDeduct = salary * natIns;
-    return natInsDeduct;
+    return natInsDeduct.toFixed(2);
 }
 
-// Requires pension contribution deduction
-
-function calcPension(salary) {
+const calcPension = function (salary) {
     const pensionDeduct = salary * pensionCont;
-    return pensionDeduct;
+    return pensionDeduct.toFixed(2);
 }
 
-// requires student loan deduction (PLAN 4 BASED)
-
-function calculateStudentLoanRepayment(annualSalary, wasStudent) {
+const calculateStudentLoanRepayment = function (annualSalary, wasStudent) {
     const repaymentThreshold = 31395;
     const repaymentRate = 0.09;
 
     if (!wasStudent) {
-        return 0; // No repayment required if the employee was never a student
+        return 0;
     }
 
     if (annualSalary <= repaymentThreshold) {
-        return 0; // No repayment required if salary is below the threshold
+        return 0;
     }
 
     const incomeAboveThreshold = annualSalary - repaymentThreshold;
     const repaymentAmount = incomeAboveThreshold * repaymentRate;
 
-    return repaymentAmount;
+    return repaymentAmount.toFixed(2);
 }
 
-// requires a function to deduct all deductions from annualSalary
+const calculateFinalSalary = function () {
+    const finalSalary = annualSalary - calculateStudentLoanRepayment(annualSalary, studentLoan) - calcPension(annualSalary) - calcNatIns(annualSalary) - calcScottishTax(annualSalary);
+    return finalSalary.toFixed(2);
+}
 
-// Requires a function for calculating weekly pay and a function for calculating monthly pay
+const calculateMonthlyPay = function () {
+    const monthlyPay = calculateFinalSalary() / 12;
+    return monthlyPay.toFixed(2);
+}
 
-// Run either the weekly pay function or the monthly pay function
-// if (payFreq === `weekly`) (weeklyPay();) else {monthlyPay}
+const calculateWeeklyPay = function () {
+    const weeklyPay = calculateFinalSalary() / 52;
+    return weeklyPay.toFixed(2);
+}
 
-// if (payFreq === `weekly`) {
-//     let paidWeekly = weeklyPay();
-//     console.log(paidWeekly());
-// } else {
-//     let paidMonthly = monthlyPay();
-//     console.log(paidMonthly());
-// }
+console.log(`${employeeName}'s Total tax on an annual salary of £${annualSalary} is £${calcScottishTax(annualSalary)}.`);
+console.log(`${employeeName} will pay £${calcNatIns(annualSalary)} in yearly National Insurance contributions.`);
+console.log(`${employeeName} will pay £${calcPension(annualSalary)} towards a pension fund.`);
+console.log(`${employeeName}'s student loan repayment amounts to £${calculateStudentLoanRepayment(annualSalary, studentLoan)}`);
+console.log(`Final salary: ${calculateFinalSalary()}`);
+console.log(`Monthly pay: £${calculateMonthlyPay()}`);
+console.log(`Weekly pay: £${calculateWeeklyPay()}`);
 
-// Console output to test results
-console.log(`${employeeName}'s Total tax on an annual salary of £${annualSalary} is £${calcScottishTax(annualSalary).toFixed(2)}.`);
-console.log(`${employeeName} will pay £${calcNatIns(annualSalary).toFixed(2)} in yearly National Insurance contributions.`);
-console.log(`${employeeName} will pay £${calcPension(annualSalary).toFixed(2)} towards a pension fund.`);
-console.log(`${employeeName}'s student loan repayment amounts to £${calculateStudentLoanRepayment(annualSalary, studentLoan).toFixed(2)}`);
