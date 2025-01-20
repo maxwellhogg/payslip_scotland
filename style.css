@@ -7,3 +7,56 @@
     --color6: ;
     --color7: ;
 }
+
+main {
+    padding-left: 120px;
+    padding-right: 120px;
+}
+
+.title {
+    padding: 26px;
+    background-color: #04AA6D;
+    color: white;
+}
+
+.title  h1{
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+label {
+    width: 160px;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+
+.input-field {
+    width: 160px;
+    padding: 4px;
+}
+
+#student {
+    width: 172px;
+}
+
+.submit-button {
+    background-color: #04AA6D; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 42px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+td {
+    width: 244px;
+    padding: 4px;
+}

@@ -1,16 +1,29 @@
 "use strict";
 
-const employeeName = `Maxwell Hogg`; //document.querySelector(`.name`).value;
-const hourlyRate = 14;
+// const employeeName = document.querySelector(`#name`).value;
+// const hourlyRate = 14;
 const hours = 40;
 const annualSalary = (hourlyRate * hours) * 52;
 const topLineMonthly = annualSalary / 12;
 const topLineWeekly = annualSalary / 52;
-const payFreq = `monthly`;
+// const payFreq = `monthly`;
 const natIns = 0.08;
-const pensionCont = 0.05;
-const blind = false;
+// const pensionCont = 0.05;
+// const blind = false;
 const studentLoan = true;
+
+document.querySelector(`.submit-button`).addEventListener('click', function () {
+    const employeeName = document.querySelector(`#name`).value;
+    const hours = document.querySelector(`#hours`).value;
+    const hourlyRate = document.querySelector(`#rate`).value;
+    const pensionCont = document.querySelector(`#pension`).value;
+    const studentLoan = document.querySelector(`#student`).value;
+    // const annualSalary = (hourlyRate * hours) * 52;
+    // const topLineMonthly = annualSalary / 12;
+    // const topLineWeekly = annualSalary / 52;
+    // const natIns = 0.08;
+    console.log(employeeName, hours, hourlyRate, pensionCont, studentLoan);
+})
 
 const calcScottishTax = function (salary) {
     const taxBands = [
