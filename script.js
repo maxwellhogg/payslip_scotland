@@ -1,28 +1,18 @@
 "use strict";
 
-// const employeeName = document.querySelector(`#name`).value;
-// const hourlyRate = 14;
-const hours = 40;
-const annualSalary = (hourlyRate * hours) * 52;
-const topLineMonthly = annualSalary / 12;
-const topLineWeekly = annualSalary / 52;
-// const payFreq = `monthly`;
-const natIns = 0.08;
-// const pensionCont = 0.05;
-// const blind = false;
-const studentLoan = true;
+let hourlyRate = document.querySelector(`#rate`).value;
+let hours = document.querySelector(`#hours`).value;
+let annualSalary = (hourlyRate * hours) * 52;
+let topLineMonthly = annualSalary / 12;
+let topLineWeekly = annualSalary / 52;
+let payFreq = `monthly`;
+let natIns = 0.08;
+let pensionCont = document.querySelector(`#pension`).value;
+let studentLoan = true;
+
 
 document.querySelector(`.submit-button`).addEventListener('click', function () {
-    const employeeName = document.querySelector(`#name`).value;
-    const hours = document.querySelector(`#hours`).value;
-    const hourlyRate = document.querySelector(`#rate`).value;
-    const pensionCont = document.querySelector(`#pension`).value;
-    const studentLoan = document.querySelector(`#student`).value;
-    // const annualSalary = (hourlyRate * hours) * 52;
-    // const topLineMonthly = annualSalary / 12;
-    // const topLineWeekly = annualSalary / 52;
-    // const natIns = 0.08;
-    console.log(employeeName, hours, hourlyRate, pensionCont, studentLoan);
+    console.log(hours, hourlyRate, pensionCont, studentLoan, annualSalary);
 })
 
 const calcScottishTax = function (salary) {
@@ -94,10 +84,10 @@ const calculateWeeklyPay = function () {
     return weeklyPay.toFixed(2);
 }
 
-console.log(`${employeeName}'s Total tax on an annual salary of £${annualSalary} is £${calcScottishTax(annualSalary)}.`);
-console.log(`${employeeName} will pay £${calcNatIns(annualSalary)} in yearly National Insurance contributions.`);
-console.log(`${employeeName} will pay £${calcPension(annualSalary)} towards a pension fund.`);
-console.log(`${employeeName}'s student loan repayment amounts to £${calculateStudentLoanRepayment(annualSalary, studentLoan)}`);
+console.log(`Total tax on an annual salary of £${annualSalary} is £${calcScottishTax(annualSalary)}.`);
+console.log(`£${calcNatIns(annualSalary)} in yearly National Insurance contributions.`);
+console.log(`£${calcPension(annualSalary)} towards a pension fund.`);
+console.log(`Student Loan £${calculateStudentLoanRepayment(annualSalary, studentLoan)}`);
 console.log(`Final salary: ${calculateFinalSalary()}`);
 console.log(`Monthly pay: £${calculateMonthlyPay()}`);
 console.log(`Weekly pay: £${calculateWeeklyPay()}`);
